@@ -1,14 +1,32 @@
 <?php
-$sMetadataVersion = '2.0';
+$sMetadataVersion = '1.1';
 $aModule = [
     'id'            => 'endereco-oxid4-client',
-    'title'         => 'Endereco Adress-Services fÃ¼r Oxid',
-    'description'   => 'Kundenstammdaten-Validierung und KorrekturvorschlÃ¤ge.',
+    'title'         => 'Endereco Adress-Services für Oxid',
+    'description'   => array(
+        'en' => 'Customer master data validation and correction suggestions',
+        'de' => 'Kundenstammdaten-Validierung und Korrekturvorschläge.',
+    ),
     'thumbnail'     => 'endereco.png',
     'version'       => '4.2.0',
-    'author'        => 'Endereco UG (HaftungsbeschrÃ¤nkt) - Gesellschaft fÃ¼r Master Data Quality Management',
+    'author'        => 'Endereco UG (Haftungsbeschränkt) - Gesellschaft für Master Data Quality Management',
     'email'         => 'info@endereco.de',
     'url'           => 'https://www.endereco.de',
+    'files' => [
+        'EnderecoConfigWidget' => 'endereco-oxid4-client/Widget/EnderecoConfigWidget.php',
+        'EnderecoColorWidget' => 'endereco-oxid4-client/Widget/EnderecoColorWidget.php',
+        'EnderecoCountryController' => 'endereco-oxid4-client/Controller/EnderecoCountryController.php',
+        'EnderecoInstaller' => 'endereco-oxid4-client/Core/EnderecoInstaller.php',
+        'EnderecoUser' => 'endereco-oxid4-client/Model/EnderecoUser.php',
+    ],
+    'templates'  => [
+        'enderecocolor.tpl' => 'endereco-oxid4-client/application/views/enderecocolor.tpl',
+        'enderecoconfig_default.tpl' => 'endereco-oxid4-client/application/configs/enderecoconfig_default.tpl',
+        'enderecoconfig_flow.tpl' => 'endereco-oxid4-client/application/configs/enderecoconfig_flow.tpl',
+        'enderecoconfig_wave.tpl' => 'endereco-oxid4-client/application/configs/enderecoconfig_wave.tpl',
+        'enderecoconfig_azure.tpl' => 'endereco-oxid4-client/application/configs/enderecoconfig_azure.tpl',
+        'endereco_settings.tpl' => 'endereco-oxid4-client/application/views/admin/tpl/endereco_settings.tpl',
+    ],
     'blocks' => [
         [
             'template' => 'layout/base.tpl',
@@ -41,29 +59,12 @@ $aModule = [
             'file' => '/application/views/hidden_fields/endereco_checkout_checkout_order_address.tpl',
         ],
     ],
-    'controllers'  => [
-        'enderecoconfig' => \Endereco\Oxid6Client\Widget\IncludeConfigWidget::class,
-        'enderecocolor' => \Endereco\Oxid6Client\Widget\IncludeColorWidget::class,
-        'enderecosettings' => \Endereco\Oxid6Client\Controller\Admin\Settings::class,
-        'enderecocountrycontroller' => \Endereco\Oxid6Client\Controller\CountryController::class,
-        'enderecosaveaddress' => \Endereco\Oxid6Client\Controller\AddressController::class,
+    'events' => [
+        'onActivate'   => 'EnderecoInstaller::onActivate',
+        'onDeactivate' => 'EnderecoInstaller::onDeactivate',
     ],
-    'extend' => [
-        \OxidEsales\Eshop\Application\Model\User::class =>  \Endereco\Oxid6Client\Model\User::class,
-        \OxidEsales\Eshop\Application\Model\User\UserUpdatableFields::class => \Endereco\Oxid6Client\Model\User\UserUpdatableFields::class,
-        \OxidEsales\Eshop\Application\Model\User\UserShippingAddressUpdatableFields::class => \Endereco\Oxid6Client\Model\User\UserShippingAddressUpdatableFields::class,
-    ],
-    'templates' => [
-        'enderecocolor.tpl' => 'endereco/endereco-oxid6-client/application/views/enderecocolor.tpl',
-        'enderecoconfig_default.tpl' => 'endereco/endereco-oxid6-client/application/configs/enderecoconfig_default.tpl',
-        'enderecoconfig_flow.tpl' => 'endereco/endereco-oxid6-client/application/configs/enderecoconfig_flow.tpl',
-        'enderecoconfig_wave.tpl' => 'endereco/endereco-oxid6-client/application/configs/enderecoconfig_wave.tpl',
-        'enderecoconfig_azure.tpl' => 'endereco/endereco-oxid6-client/application/configs/enderecoconfig_azure.tpl',
-        'endereco_settings.tpl' => 'endereco/endereco-oxid6-client/application/views/admin/tpl/endereco_settings.tpl',
-    ],
-    'events'       => [
-        'onActivate'   => '\Endereco\Oxid6Client\Installer\Installer::onActivate',
-        'onDeactivate' => '\Endereco\Oxid6Client\Installer\Installer::onDeactivate',
+    'extend'       => [
+        'oxuser' => 'enderecoclientox4/Model/EnderecoUser',
     ],
     'settings' => [
         ['group' => 'ACCESS', 'name' => 'sAPIKEY', 'type' => 'str', 'value' => ''],
