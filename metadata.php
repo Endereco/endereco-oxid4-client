@@ -18,6 +18,7 @@ $aModule = [
         'EnderecoCountryController' => 'endereco-oxid4-client/Controller/EnderecoCountryController.php',
         'EnderecoInstaller' => 'endereco-oxid4-client/Core/EnderecoInstaller.php',
         'EnderecoUser' => 'endereco-oxid4-client/Model/EnderecoUser.php',
+        'EnderecoService' => 'endereco-oxid4-client/Component/EnderecoService.php',
     ],
     'templates'  => [
         'enderecocolor.tpl' => 'endereco-oxid4-client/application/views/enderecocolor.tpl',
@@ -64,7 +65,7 @@ $aModule = [
         'onDeactivate' => 'EnderecoInstaller::onDeactivate',
     ],
     'extend'       => [
-        'oxuser' => 'enderecoclientox4/Model/EnderecoUser',
+        'oxuser' => 'endereco-oxid4-client/Model/EnderecoUser',
     ],
     'settings' => [
         ['group' => 'ACCESS', 'name' => 'sAPIKEY', 'type' => 'str', 'value' => ''],

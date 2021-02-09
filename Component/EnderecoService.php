@@ -7,10 +7,11 @@ class EnderecoService
     private $_moduleVer;
 
     public function __construct() {
-        $sOxId = \OxidEsales\Eshop\Core\Registry::getConfig()->getShopId();
-        $this->_apiKey = \OxidEsales\Eshop\Core\Registry::getConfig()->getShopConfVar('sAPIKEY', $sOxId, 'module:endereco-oxid4-client');
-        $this->_endpoint = \OxidEsales\Eshop\Core\Registry::getConfig()->getShopConfVar('sSERVICEURL', $sOxId, 'module:endereco-oxid4-client');
-        $moduleVersions = \OxidEsales\Eshop\Core\Registry::getConfig()->getConfigParam('aModuleVersions');
+        $oConfig = oxRegistry::getConfig();
+        $sOxId = $oConfig->getShopId();
+        $this->_apiKey = $oConfig->getShopConfVar('sAPIKEY', $sOxId, 'module:endereco-oxid4-client');
+        $this->_endpoint = $oConfig->getShopConfVar('sSERVICEURL', $sOxId, 'module:endereco-oxid4-client');
+        $moduleVersions = $oConfig->getConfigParam('aModuleVersions');
         $this->_moduleVer  = "Endereco Oxid4 Client v" . $moduleVersions['endereco-oxid4-client'];
     }
 
@@ -19,13 +20,113 @@ class EnderecoService
 
     }
 
-    public function closeConversion($sessionId)
+    public function closeSessions($sessionIds = array())
     {
+        foreach($sessionIds as $sessionId) {
+            $data = array(
+                'jsonrpc' => '2.0',
+                'method'  => 'doAccounting',
+                'params' => array(
+                    'sessionId' => $sessionId
+                )
+            );
+            $data_string = json_encode($data);
+            $tried_http = false;
+            $api_url = $this->_endpoint;
 
+            while (true) {
+                $ch = curl_init($api_url);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 4);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 4);
+                curl_setopt(
+                    $ch,
+                    CURLOPT_HTTPHEADER,
+                    array(
+                        'Content-Type: application/json',
+                        'X-Auth-Key: ' . trim($this->_apiKey),
+                        'X-Transaction-Id: ' . $sessionId,
+                        'X-Transaction-Referer: ' . $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:__FILE__,
+                        'X-Agent: ' . $this->_moduleVer,
+                        'Content-Length: ' . strlen($data_string))
+                );
+                $chret = curl_exec($ch);
+                $ch_error = curl_errno($ch);
+
+                // Timeout error. Service is not working.
+                if (28 === $ch_error) {
+                    return;
+                }
+
+                // Could not connect and havent tried http yet.
+                if ((0 !== $ch_error) && !$tried_http) {
+                    // Try replacing https with http, maybe ssl is dead for some reason.
+                    $api_url = str_replace('https://', 'http://', $api_url);
+                    $tried_http = true;
+                    continue;
+                }
+                curl_close($ch);
+
+                break;
+            }
+        }
+    }
+
+    public function closeConversion()
+    {
+        $data = array(
+            'jsonrpc' => '2.0',
+            'method'  => 'doConversion',
+        );
+        $data_string = json_encode($data);
+        $tried_http = false;
+        $api_url = $this->_endpoint;
+        // (Shop Version; active Theme)
+
+        while (true) {
+            $ch = curl_init($api_url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2); // 4 seconds
+            curl_setopt($ch, CURLOPT_TIMEOUT, 2); // 4 seconds
+            curl_setopt(
+                $ch,
+                CURLOPT_HTTPHEADER,
+                array(
+                    'Content-Type: application/json',
+                    'X-Auth-Key: ' . trim($this->_apiKey),
+                    'X-Transaction-Id: not_required',
+                    'X-Transaction-Referer: ' . $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:__FILE__,
+                    'X-Agent: ' . $this->_moduleVer,
+                    'Content-Length: ' . strlen($data_string))
+            );
+            curl_exec($ch);
+            $ch_error = curl_errno($ch);
+
+            // Timeout error. Service is not working.
+            if (28 === $ch_error) {
+                return;
+            }
+
+            // Could not connect and havent tried http yet.
+            if ((0 !== $ch_error) && !$tried_http) {
+                // Try replacing https with http, maybe ssl is dead for some reason.
+                $api_url = str_replace('https://', 'http://', $api_url);
+                $tried_http = true;
+                continue;
+            }
+            curl_close($ch);
+
+            break;
+        }
     }
 
     public function checkAddress($address)
     {
+        $oConfig = oxRegistry::getConfig();
         try {
             $message = [
                 'jsonrpc' => '2.0',
@@ -40,50 +141,93 @@ class EnderecoService
                     'houseNumber' => $address['buildingNumber'],
                 ]
             ];
-            $client = new Client(['timeout' => 6.0]);
-            $newHeaders = [
-                'Content-Type' => 'application/json',
-                'X-Auth-Key' => $this->_apiKey,
-                'X-Transaction-Id' => $this->generateSessionId(),
-                'X-Transaction-Referer' => $_SERVER['HTTP_REFERER'],
-                'X-Agent' => $this->_moduleVer,
-            ];
 
-            $request = new Request('POST', $this->_endpoint, $newHeaders, json_encode($message));
-            $response = $client->send($request);
-            $responseJson = $response->getBody()->getContents();
-            $reponseArray = json_decode($responseJson, true);
-            if (array_key_exists('result', $reponseArray)) {
-                $result = $reponseArray['result'];
+            if (!$oConfig->isUtf()) {
+                $message['params']['postCode'] = iconv('ISO-8859-1', 'UTF-8', $message['params']['postCode']);
+                $message['params']['cityName'] = iconv('ISO-8859-1', 'UTF-8', $message['params']['cityName']);
+                $message['params']['street'] = iconv('ISO-8859-1', 'UTF-8', $message['params']['street']);
+                $message['params']['houseNumber'] = iconv('ISO-8859-1', 'UTF-8', $message['params']['houseNumber']);
+            }
 
-                $predictions = array();
-                $maxPredictions = 6;
-                $counter = 0;
-                foreach ($result['predictions'] as $prediction) {
-                    $tempAddress = array(
-                        'countryCode' => $prediction['countryCode']?$prediction['countryCode']:$address['countryCode'],
-                        'postalCode' => $prediction['postCode'],
-                        'locality' => $prediction['cityName'],
-                        'streetName' => $prediction['street'],
-                        'buildingNumber' => $prediction['houseNumber']
-                    );
-                    if (array_key_exists('additionalInfo', $prediction)) {
-                        $tempAddress['additionalInfo'] = $prediction['additionalInfo'];
-                    }
+            $data_string = json_encode($message);
 
-                    $predictions[] = $tempAddress;
-                    $counter++;
-                    if ($counter >= $maxPredictions) {
-                        break;
-                    }
+            $tried_http = false;
+            $api_url = $this->_endpoint;
+            $sReturnJson = '';
+
+            while (true) {
+                $ch = curl_init($api_url);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 4); // 4 seconds
+                curl_setopt($ch, CURLOPT_TIMEOUT, 4); // 4 seconds
+                curl_setopt(
+                    $ch,
+                    CURLOPT_HTTPHEADER,
+                    array(
+                        'Content-Type: application/json',
+                        'X-Auth-Key: ' . trim($this->_apiKey),
+                        'X-Transaction-Id: ' . $this->generateSessionId(),
+                        'X-Transaction-Referer: ' . $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:__FILE__,
+                        'X-Agent: ' . $this->_moduleVer,
+                        'Content-Length: ' . strlen($data_string))
+                );
+                $sReturnJson = curl_exec($ch);
+                $ch_error = curl_errno($ch);
+
+                // Timeout error. Service is not working.
+                if (28 === $ch_error) {
+                    return;
                 }
 
-                $address['__predictions'] = json_encode($predictions);
-                $address['__timestamp'] = time();
-                $address['__status'] = implode(',', $this->normalizeStatusCodes($result['status']));
+                // Could not connect and havent tried http yet.
+                if ((0 !== $ch_error) && !$tried_http) {
+                    // Try replacing https with http, maybe ssl is dead for some reason.
+                    $api_url = str_replace('https://', 'http://', $api_url);
+                    $tried_http = true;
+                    continue;
+                }
+                curl_close($ch);
+
+                break;
+            }
+
+            if (!empty($sReturnJson)) {
+                $reponseArray = json_decode($sReturnJson, true);
+                if (array_key_exists('result', $reponseArray)) {
+                    $result = $reponseArray['result'];
+
+                    $predictions = array();
+                    $maxPredictions = 6;
+                    $counter = 0;
+                    foreach ($result['predictions'] as $prediction) {
+                        $tempAddress = array(
+                            'countryCode' => $prediction['countryCode']?$prediction['countryCode']:$address['countryCode'],
+                            'postalCode' => $prediction['postCode'],
+                            'locality' => $prediction['cityName'],
+                            'streetName' => $prediction['street'],
+                            'buildingNumber' => $prediction['houseNumber']
+                        );
+                        if (array_key_exists('additionalInfo', $prediction)) {
+                            $tempAddress['additionalInfo'] = $prediction['additionalInfo'];
+                        }
+
+                        $predictions[] = $tempAddress;
+                        $counter++;
+                        if ($counter >= $maxPredictions) {
+                            break;
+                        }
+                    }
+
+                    $address['__predictions'] = json_encode($predictions);
+                    $address['__timestamp'] = time();
+                    $address['__status'] = implode(',', $this->normalizeStatusCodes($result['status']));
+                }
             }
         } catch(\Exception $e) {
             // Do nothing.
+            die($e->getMessage());
         }
 
         return $address;

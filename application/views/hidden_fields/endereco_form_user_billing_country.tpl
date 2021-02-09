@@ -34,7 +34,12 @@
                     })
                 }).catch();
 
-                window.EnderecoIntegrator.initPersonServices('invadr[oxuser__');
+                window.EnderecoIntegrator.initPersonServices(
+                    'invadr[oxuser__',
+                    {
+                        name: 'billing'
+                    }
+                );
                 clearInterval($interval);
             }
         }, 100);

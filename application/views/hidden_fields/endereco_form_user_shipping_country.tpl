@@ -31,7 +31,12 @@
                     })
                 }).catch();
 
-                window.EnderecoIntegrator.initPersonServices('deladr[oxaddress__');
+                window.EnderecoIntegrator.initPersonServices(
+                    'deladr[oxaddress__',
+                    {
+                        name: 'shipping'
+                    }
+                );
                 clearInterval($interval);
             }
         }, 100);
