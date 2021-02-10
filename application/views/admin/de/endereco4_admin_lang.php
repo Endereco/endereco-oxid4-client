@@ -19,9 +19,9 @@ $sLangName  = "Deutsch";
 // -------------------------------
 $aLang = [
     'charset' => 'ISO-8859-1',
-    'ENDERECO_OXID6_CLIENT_MAIN' => 'Endereco',
-    'ENDERECO_OXID6_CLIENT_HOME' => 'Modul',
-    'ENDERECO_OXID6_CLIENT_SETTINGS' => 'Einstellungen',
+    'ENDERECO_OXID4_CLIENT_MAIN' => 'Endereco',
+    'ENDERECO_OXID4_CLIENT_HOME' => 'Endereco Modul',
+    'ENDERECO_OXID4_CLIENT_SETTINGS' => 'Einstellungen',
     'ENDERECOCLIENTOX_SETTINGS_STATUS' => 'Status:',
     'ENDERECOCLIENTOX_SETTINGS_STATUS_OK' => 'Ok',
     'ENDERECOCLIENTOX_SETTINGS_STATUS_OK_LONG' => ' - Die Verbindung zum Endereco-Server wurde erfolgreich hergestellt.',

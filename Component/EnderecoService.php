@@ -17,60 +17,60 @@ class EnderecoService
 
     public function closeSession($sessionId)
     {
+        $data = array(
+            'jsonrpc' => '2.0',
+            'method'  => 'doAccounting',
+            'params' => array(
+                'sessionId' => $sessionId
+            )
+        );
+        $data_string = json_encode($data);
+        $tried_http = false;
+        $api_url = $this->_endpoint;
 
+        while (true) {
+            $ch = curl_init($api_url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 4);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 4);
+            curl_setopt(
+                $ch,
+                CURLOPT_HTTPHEADER,
+                array(
+                    'Content-Type: application/json',
+                    'X-Auth-Key: ' . trim($this->_apiKey),
+                    'X-Transaction-Id: ' . $sessionId,
+                    'X-Transaction-Referer: ' . $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:__FILE__,
+                    'X-Agent: ' . $this->_moduleVer,
+                    'Content-Length: ' . strlen($data_string))
+            );
+            $chret = curl_exec($ch);
+            $ch_error = curl_errno($ch);
+
+            // Timeout error. Service is not working.
+            if (28 === $ch_error) {
+                return;
+            }
+
+            // Could not connect and havent tried http yet.
+            if ((0 !== $ch_error) && !$tried_http) {
+                // Try replacing https with http, maybe ssl is dead for some reason.
+                $api_url = str_replace('https://', 'http://', $api_url);
+                $tried_http = true;
+                continue;
+            }
+            curl_close($ch);
+
+            break;
+        }
     }
 
     public function closeSessions($sessionIds = array())
     {
         foreach($sessionIds as $sessionId) {
-            $data = array(
-                'jsonrpc' => '2.0',
-                'method'  => 'doAccounting',
-                'params' => array(
-                    'sessionId' => $sessionId
-                )
-            );
-            $data_string = json_encode($data);
-            $tried_http = false;
-            $api_url = $this->_endpoint;
-
-            while (true) {
-                $ch = curl_init($api_url);
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 4);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 4);
-                curl_setopt(
-                    $ch,
-                    CURLOPT_HTTPHEADER,
-                    array(
-                        'Content-Type: application/json',
-                        'X-Auth-Key: ' . trim($this->_apiKey),
-                        'X-Transaction-Id: ' . $sessionId,
-                        'X-Transaction-Referer: ' . $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:__FILE__,
-                        'X-Agent: ' . $this->_moduleVer,
-                        'Content-Length: ' . strlen($data_string))
-                );
-                $chret = curl_exec($ch);
-                $ch_error = curl_errno($ch);
-
-                // Timeout error. Service is not working.
-                if (28 === $ch_error) {
-                    return;
-                }
-
-                // Could not connect and havent tried http yet.
-                if ((0 !== $ch_error) && !$tried_http) {
-                    // Try replacing https with http, maybe ssl is dead for some reason.
-                    $api_url = str_replace('https://', 'http://', $api_url);
-                    $tried_http = true;
-                    continue;
-                }
-                curl_close($ch);
-
-                break;
-            }
+            $this->closeSession($sessionId);
         }
     }
 
@@ -306,5 +306,69 @@ class EnderecoService
             in_array('address_needs_correction', $statusCodes) ||
             in_array('address_multiple_variants', $statusCodes)
         );
+    }
+
+    public function checkConnection() {
+        // Check connection
+        $data = array(
+            'jsonrpc' => '2.0',
+            'id' => 1,
+            'method' => 'readinessCheck',
+        );
+        $data_string = json_encode($data);
+        $tried_http = false;
+        $api_url = $this->_endpoint;
+        $result = '';
+
+        while (true) {
+            $ch = curl_init($api_url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2); // 2 seconds
+            curl_setopt($ch, CURLOPT_TIMEOUT, 2); // 2 seconds
+            curl_setopt(
+                $ch,
+                CURLOPT_HTTPHEADER,
+                array(
+                    'Content-Type: application/json',
+                    'X-Auth-Key: ' . trim($this->_apiKey),
+                    'X-Transaction-Id: ' . 'not_required',
+                    'X-Transaction-Referer: ' . $_SERVER['HTTP_REFERER']?$_SERVER['HTTP_REFERER']:__FILE__,
+                    'X-Agent: ' . $this->_moduleVer,
+                    'Content-Length: ' . strlen($data_string))
+            );
+
+            $result = curl_exec($ch);
+            $ch_info = curl_getinfo($ch);
+            $ch_error = curl_errno($ch);
+
+            // Could not connect and havent tried http yet.
+            if ((0 !== $ch_error) && !$tried_http) {
+                // Try replacing https with http, maybe ssl is dead for some reason.
+                $api_url = str_replace('https://', 'http://', $api_url);
+                $tried_http = true;
+                continue;
+            }
+
+            // Still connection error?. Break then.
+            if (0 !== $ch_error) {
+                $result = '';
+                return 0;
+                break;
+            }
+
+            break;
+        }
+
+        curl_close($ch);
+
+        if ('' !== $result) {
+            $resultArray = json_decode($result, true);
+            if (isset($resultArray['result'])) {
+                return 1;
+            }
+        }
+        return 0;
     }
 }

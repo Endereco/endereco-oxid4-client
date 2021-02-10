@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <OX>
-    <OXMENU id="ENDERECO_OXID6_CLIENT_MAIN">
-        <MAINMENU id="ENDERECO_OXID6_CLIENT_HOME">
-            <SUBMENU id="ENDERECO_OXID6_CLIENT_SETTINGS" cl="enderecosettings"/>
+    <OXMENU id="ENDERECO_OXID4_CLIENT_MAIN">
+        <MAINMENU id="ENDERECO_OXID4_CLIENT_HOME">
+            <SUBMENU id="ENDERECO_OXID4_CLIENT_SETTINGS" cl="EnderecoSettings"/>
         </MAINMENU>
     </OXMENU>
 </OX>

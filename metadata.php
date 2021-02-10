@@ -20,6 +20,7 @@ $aModule = [
         'EnderecoUser' => 'endereco-oxid4-client/Model/EnderecoUser.php',
         'EnderecoService' => 'endereco-oxid4-client/Component/EnderecoService.php',
         'EnderecoAddressController' => 'endereco-oxid4-client/Controller/EnderecoAddressController.php',
+        'EnderecoSettings' => 'endereco-oxid4-client/Controller/Admin/EnderecoSettings.php',
     ],
     'templates'  => [
         'enderecocolor.tpl' => 'endereco-oxid4-client/application/views/enderecocolor.tpl',
