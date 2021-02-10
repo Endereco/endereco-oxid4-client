@@ -1,20 +1,24 @@
 <?php
 
-namespace Endereco\Oxid6Client\Controller;
-
-use \OxidEsales\Eshop\Application\Model\User;
-use \OxidEsales\Eshop\Application\Model\Address;
-
-class AddressController extends \OxidEsales\Eshop\Application\Controller\FrontendController
+class EnderecoAddressController extends oxUBase
 {
     public function render()
     {
         $oConfig = $this->getConfig();
-        $sOxId = \OxidEsales\Eshop\Core\Registry::getConfig()->getRequestParameter('oxid');
+        $sOxId = $oConfig->getRequestParameter('oxid');
         $data = json_decode(file_get_contents('php://input'), true);
         if ('editBillingAddress' == $data['method']) {
             // Save billing address.
-            $oUser = new User();
+            $oUser = oxNew('oxuser');
+
+            if (!$oConfig->isUtf()) {
+                $data['params']['address']['postalCode'] = iconv('UTF-8', 'ISO-8859-1', $data['params']['address']['postalCode']);
+                $data['params']['address']['locality'] = iconv('UTF-8', 'ISO-8859-1', $data['params']['address']['locality']);
+                $data['params']['address']['streetName'] = iconv('UTF-8', 'ISO-8859-1',  $data['params']['address']['streetName']);
+                $data['params']['address']['buildingNumber'] = iconv('UTF-8', 'ISO-8859-1',  $data['params']['address']['buildingNumber']);
+                $data['params']['address']['additionalInfo'] = iconv('UTF-8', 'ISO-8859-1', $data['params']['address']['additionalInfo']);
+            }
+
             if ($oUser->load($data['params']['addressId'])) {
                 $oUser->oxuser__oxzip->rawValue = $data['params']['address']['postalCode']?$data['params']['address']['postalCode']:$oUser->oxuser__oxzip->rawValue;
                 $oUser->oxuser__oxcity->rawValue = $data['params']['address']['locality']?$data['params']['address']['locality']:$oUser->oxuser__oxcity->rawValue;
@@ -32,7 +36,16 @@ class AddressController extends \OxidEsales\Eshop\Application\Controller\Fronten
 
         if ('editShippingAddress' == $data['method']) {
             // Save shipping address.
-            $oAddress = new Address();
+            $oAddress = oxNew("oxaddress");
+
+            if (!$oConfig->isUtf()) {
+                $data['params']['address']['postalCode'] = iconv('UTF-8', 'ISO-8859-1', $data['params']['address']['postalCode']);
+                $data['params']['address']['locality'] = iconv('UTF-8', 'ISO-8859-1', $data['params']['address']['locality']);
+                $data['params']['address']['streetName'] = iconv('UTF-8', 'ISO-8859-1',  $data['params']['address']['streetName']);
+                $data['params']['address']['buildingNumber'] = iconv('UTF-8', 'ISO-8859-1',  $data['params']['address']['buildingNumber']);
+                $data['params']['address']['additionalInfo'] = iconv('UTF-8', 'ISO-8859-1', $data['params']['address']['additionalInfo']);
+            }
+
             if ($oAddress->load($data['params']['addressId'])) {
                 $oAddress->oxaddress__oxzip->rawValue = $data['params']['address']['postalCode']?$data['params']['address']['postalCode']:$oAddress->oxaddress__oxzip->rawValue;
                 $oAddress->oxaddress__oxcity->rawValue = $data['params']['address']['locality']?$data['params']['address']['locality']:$oAddress->oxaddress__oxcity->rawValue;

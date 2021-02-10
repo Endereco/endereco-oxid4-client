@@ -87,7 +87,7 @@
                                 EAO._awaits++;
                                 EAO.util.axios({
                                     method: 'post',
-                                    url: '[{$sitepath}]?cl=enderecosaveaddress',
+                                    url: '[{$sitepath}]?cl=EnderecoAddressController',
                                     data: {
                                         method: 'editBillingAddress',
                                         params: {
@@ -207,7 +207,7 @@
                                     EAO._awaits++;
                                     EAO.util.axios({
                                         method: 'post',
-                                        url: '[{$sitepath}]?cl=enderecosaveaddress',
+                                        url: '[{$sitepath}]?cl=EnderecoAddressController',
                                         data: {
                                             method: 'editShippingAddress',
                                             params: {
