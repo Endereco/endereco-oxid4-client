@@ -18,7 +18,7 @@ $sLangName  = "Deutsch";
 // RESOURCE IDENTITFIER = STRING
 // -------------------------------
 $aLang = [
-    'charset' => 'ISO-8859-1',
+    'charset' => 'ISO-8859-15',
     'ENDERECO_OXID4_CLIENT_MAIN' => 'Endereco',
     'ENDERECO_OXID4_CLIENT_HOME' => 'Endereco Modul',
     'ENDERECO_OXID4_CLIENT_SETTINGS' => 'Einstellungen',
@@ -32,38 +32,75 @@ $aLang = [
 
     'SHOP_MODULE_GROUP_ACCESS' => 'Zugangsdaten',
     'SHOP_MODULE_sAPIKEY' => 'API Schlüssel',
-    'HELP_SHOP_MODULE_sAPIKEY' => 'Den API Key kannst du kostenfrei unter <a href="mailto:info@endereco.de">info@endereco.de</a> beantragen',
+    'HELP_SHOP_MODULE_sAPIKEY' => 'Den API Key kannst du entweder über die Website von Endereco (<a href="https://www.endereco.de" target="_blank">www.endereco.de</a>) eine Anfrage erstellen oder über eine E-Mail an <a href="mailto:info@endereco.de">info@endereco.de</a> anfragen.',
     'SHOP_MODULE_sSERVICEURL' => 'Service URL',
     'HELP_SHOP_MODULE_sSERVICEURL' => 'Hier sollte nur die Live URL in den ausgelieferten Modulen hinterlegt werden',
 
     'SHOP_MODULE_GROUP_AMS' => 'Adress-Services Konfiguration',
+
     'SHOP_MODULE_sUSEAMS' => 'Adressprüfung und Eingabe-Assistent aktivieren',
+    'HELP_SHOP_MODULE_sUSEAMS' => 'Mit dieser Einstellung wird bestimmt, ob der die Adressprüfung und Eingabe-Assistent im Frontend ausgeführt werden sollen. Ist sie inaktiv, so werden während der Eingabe keine Adressen geprüft.',
+
     'SHOP_MODULE_sCHECKALL' => 'Auch Bestandskunden einmalig prüfen',
     'HELP_SHOP_MODULE_sCHECKALL' => 'Bestandskunden, die noch nicht geprüft wurden, werden bei einem Login und Aufruf einer Adressformular-Seite automatisch geprüft.',
+
     'SHOP_MODULE_sAMSBLURTRIGGER' => 'Adressprüfung sofort nach verlassen des Hausnummern Feldes auslösen',
-    'SHOP_MODULE_sAMSSubmitTrigger' => 'Adressprüfung beim Absenden des Formulars auslösen',
-    'SHOP_MODULE_sAMSResumeSubmit' => 'Das Absenden des Formulars nach der Adressauswahl fortsetzen',
     'HELP_SHOP_MODULE_sAMSBLURTRIGGER' => 'Ist die Funktion aktiv, wird die Adressprüfung sofort nach Eingabe der Adresse angestoßen. Ist die deaktiviert, erfolg die Prüfung beim Klick auf den "Weiter" Button.',
-    'SHOP_MODULE_sSMARTFILL' => 'Felder bei nur einem verbleibenden Adressvorschlag automatisch ausfüllen (SmartAutocomplete) <i>beta</i>',
+
+    'SHOP_MODULE_sAMSSubmitTrigger' => 'Adressprüfung beim Absenden des Formulars auslösen',
+    'HELP_SHOP_MODULE_sAMSSubmitTrigger' => 'Über diese Einstellung wird bestimmt, dass beim Klicken auf "Absenden" oder betätigen der Enter-Taste die Adresse geprüft werden soll. Diese Funktion kann man deaktivieren, wenn man programmiertechnisch den Zeitpunkt der Prüfung selber steuern möchte.',
+
+    'SHOP_MODULE_sAMSResumeSubmit' => 'Das Absenden des Formulars nach der Adressauswahl fortsetzen',
+    'HELP_SHOP_MODULE_sAMSResumeSubmit' => 'Mit dieser Einstellung wird bestimmt, ob nach der Auswahl und Übernahme einer Adresse das Absenden der Form fortgesetzt wird oder ob der Nutzer noch mal auf "Absenden" klicken muss.',
+
+    'SHOP_MODULE_sSMARTFILL' => 'Automatisches Übernehmen, wenn es bei der Eingabe nur ein Vorschlag gibt (SmartAutocomplete)',
+    'HELP_SHOP_MODULE_sSMARTFILL' => 'Wenn während der Eingabe von Postleitzahl, Ort oder der Straße die Eingabe eindeutig ist (nur ein Vorschlag), wird diese Eingabe in das Eingabefeld automatisch übernommen und die Eingabe für 1 Sekunde blockiert, damit der Nutzer es merken kann. Löscht der Nutzer seine Eingabe, wird der SmartAutocomplete für seine Session deaktiviert.',
+
     'SHOP_MODULE_bChangeFieldsOrder' => 'Felderreihenfolge optimieren',
+    'HELP_SHOP_MODULE_bChangeFieldsOrder' => 'Unser Modul ordnet die Eingabefelder optimal um. Die Eingabe beginnt mit Land, gefolgt von Postleitzahl und Ort und wird abgeschlossen mit Straße, Hausnummer und Zusatzinfos.',
 
     'SHOP_MODULE_GROUP_EmailServices' => 'E-Mail Service',
+
     'SHOP_MODULE_bShowEmailserviceErrors' => 'E-Mail Statusmeldungen anzeigen',
+    'HELP_SHOP_MODULE_bShowEmailserviceErrors' => 'Diese Einstellung bestimmt, ob unterhalb des E-Mail-Eingabefeldes die Fehlermeldungen in Textform angezeigt werden sollen.',
+
     'SHOP_MODULE_bUseEmailservice'=> 'E-Mail Adressprüfung aktivieren',
+    'HELP_SHOP_MODULE_bUseEmailservice' => 'Hiermit wird bestimmt, ob die E-Mail Adresse geprüft werden soll. Wir prüfen die Schreibweise (Syntax) der E-Mail, den Host und ob dort E-Mails zugestellt werden können und schließlich, ob das Postfach tatsächlich existiert.',
+
     'SHOP_MODULE_GROUP_PersonalService'=> 'Anredeprüfung',
+
     'SHOP_MODULE_bUsePersonalService'=> 'Anredeprüfung basierend auf dem Vornamen aktivieren und Anrede automatisch setzen',
+    'HELP_SHOP_MODULE_bUsePersonalService' => 'Wenn nach der Eingabe des Vornamens keine Anrede ausgewählt ist und der Vorname einem Geschlecht eindeutig zugeordnet werden kann, dann setzen wir die Anrede. Ansonsten markieren wir die Anrede als richtig (grün) oder möglicherweise fehlerhaft (orange).',
+
     'SHOP_MODULE_GROUP_VISUAL'=> 'Designanpassungen',
+
     'SHOP_MODULE_bUseCss'=> 'Standard-CSS nutzen',
+    'HELP_SHOP_MODULE_bUseCss' => 'Unser Modul liefert im Standardfall alle benötigte Styles. Falls man diese jedoch wesentlich überarbeiten möchte, kann man mit dieser Einstellung die Styles deaktivieren. Dadurch entstehen später keine CSS-Konflikte.',
+
     'SHOP_MODULE_sMainColor'=> 'Hauptfarbe im Dropdown',
+
     'SHOP_MODULE_sErrorColor'=> 'Fehlerfarbe im Modal',
+
     'SHOP_MODULE_sSelectionColor'=> 'Auswahlfarbe im Modal',
+
     'SHOP_MODULE_GROUP_ADVANCED'=> 'Entwicklereinstellungen',
+
     'SHOP_MODULE_bAllowControllerFilter' => 'Whitelist der Controller-Klassen aktivieren',
+    'HELP_SHOP_MODULE_bAllowControllerFilter' => 'Über diese Einstellung kann man das Einbinden von Javascript-Dateien des Moduls auf allen Seiten verbieten. Zugelassen werden nur die Seiten, dessen Controller in der Whitelist stehen.',
+
     'SHOP_MODULE_sAllowedControllerClasses'=> 'Whitelist der Controller-Klassen, bei denen das Modul aktiviert wird',
+    'HELP_SHOP_MODULE_sAllowedControllerClasses' => 'Diese Klassen dürfen unser Modul in HTML der Seite einbinden. Alle Controllernamen sollen kleingeschrieben werden und mit Komma getrennt sein. Keine Leerzeichen sind dazwischen erlaubt.',
+
     'SHOP_MODULE_bShowDebug'=> 'Debuginformationen in der Browserkonsole ausgeben',
+    'HELP_SHOP_MODULE_bShowDebug' => 'Hierüber bestimmt man, ob das Modul die Debuginformation in der Browser Konsole ausgibt. Nützlich für Debugzwecke.',
 
     'SHOP_MODULE_bPreselectCountry' => 'Standardland vorausw&auml;hlen',
+    'HELP_SHOP_MODULE_bPreselectCountry' => 'Wenn beim Laden der Seite das Landeingabefeld nicht ausgewählt ist, wird mit dieser Funktion ein bestimmtes Land vorausgewählt.',
+
+
     'SHOP_MODULE_sPreselectableCountries' => 'Standardland',
+    'HELP_SHOP_MODULE_sPreselectableCountries' => 'Damit kann bestimmt werden, welches Land vorausgewählt wird. Wichtig! Bitte nur das Land wählen, welches auch im Shop auswählbar wäre.',
+
     'SHOP_MODULE_sPreselectableCountries_af' => 'Afghanistan',
     'SHOP_MODULE_sPreselectableCountries_ax' => 'Åland-Inseln',
     'SHOP_MODULE_sPreselectableCountries_al' => 'Albanien',

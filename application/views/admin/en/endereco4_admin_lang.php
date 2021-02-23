@@ -18,7 +18,7 @@ $sLangName  = "English";
 // RESOURCE IDENTITFIER = STRING
 // -------------------------------
 $aLang = [
-    'charset' => 'ISO-8859-1',
+    'charset' => 'ISO-8859-15',
     'ENDERECO_OXID4_CLIENT_MAIN' => 'Endereco',
     'ENDERECO_OXID4_CLIENT_HOME' => 'Endereco Module',
     'ENDERECO_OXID4_CLIENT_SETTINGS' => 'Settings',
@@ -31,36 +31,75 @@ $aLang = [
     'ENDERECOCLIENTOX_SETTINGS_STATUS_FAIL_HELP' => 'Connection failed. Please check the API-Key. If you have no API-Key, make sure to contact Endereco service provider at info@endereco.de.',
 
     'SHOP_MODULE_GROUP_ACCESS' => 'Access Data',
+
     'SHOP_MODULE_sAPIKEY' => 'Api Key',
+    'HELP_SHOP_MODULE_sAPIKEY' => 'You can either create the API Key request via Endereco\'s website (<a href="https://www.endereco.de" target="_blank">www.endereco.de</a>) or request it via email to <a href="mailto:info@endereco.de">info@endereco.de</a>.',
+
     'SHOP_MODULE_sSERVICEURL' => 'Service Server Url',
+    'HELP_SHOP_MODULE_sSERVICEURL' => 'Here only the live URL should be stored in the delivered modules',
 
     'SHOP_MODULE_GROUP_AMS' => 'AMS',
-    'SHOP_MODULE_sUSEAMS' => 'Adresscheck and InputAssistant is active',
+
+    'SHOP_MODULE_sUSEAMS' => 'Addresscheck and InputAssistant is active',
+    'HELP_SHOP_MODULE_sUSEAMS' => 'This setting determines whether the address check and input wizard should be executed in the frontend. If it is inactive, no addresses are checked during input.',
+
     'SHOP_MODULE_sCHECKALL' => 'Check existing customers with unchecked address',
     'HELP_SHOP_MODULE_sCHECKALL' => 'Existing customers with incorrect unchecked address will receive address check predictions automatically',
+
     'SHOP_MODULE_sAMSBLURTRIGGER' => 'Trigger AddressCheck immediately after entering or changing the address',
+    'HELP_SHOP_MODULE_sAMSBLURTRIGGER' => 'If the function is active, the address check is triggered immediately after entering the address. If it is deactivated, the check is performed when you click the "Next" button.',
+
     'SHOP_MODULE_sAMSSubmitTrigger' => 'Check address on submit',
+    'HELP_SHOP_MODULE_sAMSSubmitTrigger' => 'This setting determines that the address is to be checked when "Send" is clicked or the Enter key is pressed. This function can be deactivated if you want to control the time of the check yourself.',
+
     'SHOP_MODULE_sAMSResumeSubmit' => 'Continue submit after the address has been selected',
+    'HELP_SHOP_MODULE_sAMSResumeSubmit' => 'This setting determines whether, after selecting and accepting an address, the form will continue to be submitted or whether the user must click "Submit" again.',
+
     'SHOP_MODULE_sSMARTFILL' => 'Fill fields when input is obvious (SmartFill)',
+    'HELP_SHOP_MODULE_sSMARTFILL' => 'If during the input of postal code, city or the street the input is unique (only a suggestion), this input is automatically taken over into the input field and the input is blocked for 1 second so that the user can notice it. If the user deletes his input, SmartAutocomplete is disabled for his session.',
+
     'SHOP_MODULE_bChangeFieldsOrder' => 'Optimize address fields order',
+    'HELP_SHOP_MODULE_bChangeFieldsOrder' => 'Our module rearranges the input fields optimally. The input starts with country, followed by postal code and city and is completed with street, house number and additional info.',
 
     'SHOP_MODULE_GROUP_EmailServices' => 'Emailservice',
+
     'SHOP_MODULE_bUseEmailservice'=> 'Emailcheck is active',
-    'SHOP_MODULE_bShowEmailserviceErrors' => 'Display eMail status messages',
+    'HELP_SHOP_MODULE_bUseEmailservice' => 'This determines whether the e-mail address should be checked. We check the spelling (syntax) of the e-mail, the host and whether e-mails can be delivered there and finally whether the mailbox actually exists.',
+
+    'SHOP_MODULE_bShowEmailserviceErrors' => 'Display email status messages',
+    'HELP_SHOP_MODULE_bShowEmailserviceErrors' => 'This setting determines whether the error messages should be displayed in text form below the e-mail input field.',
+
     'SHOP_MODULE_GROUP_PersonalService'=> 'Personservice',
+
     'SHOP_MODULE_bUsePersonalService'=> 'Check salutation',
+    'HELP_SHOP_MODULE_bUsePersonalService' => 'If no salutation is selected after entering the first name and the first name can be clearly assigned to a gender, then we set the salutation. Otherwise we mark the salutation as correct (green) or possibly incorrect (orange).',
+
     'SHOP_MODULE_GROUP_VISUAL'=> 'Visual',
+
     'SHOP_MODULE_bUseCss'=> 'Use provided CSS',
+    'HELP_SHOP_MODULE_bUseCss' => 'Our module provides all required styles by default. However, if you want to revise them significantly, you can disable the styles with this setting. This way no CSS conflicts will occur later.',
+
     'SHOP_MODULE_sMainColor'=> 'Dropdown color',
     'SHOP_MODULE_sErrorColor'=> 'Modal error color',
     'SHOP_MODULE_sSelectionColor'=> 'Modal selection color',
+
     'SHOP_MODULE_GROUP_ADVANCED'=> 'Advanced',
+
     'SHOP_MODULE_bAllowControllerFilter' => 'Whitelist for controller classes is active',
+    'HELP_SHOP_MODULE_bAllowControllerFilter' => 'This setting allows you to disallow the inclusion of the module\'s Javascript files on all pages. Only the pages whose controllers are in the whitelist are allowed.',
+
     'SHOP_MODULE_sAllowedControllerClasses'=> 'Whitelist for controller classes',
+    'HELP_SHOP_MODULE_sAllowedControllerClasses' => 'These classes are allowed to include our module in HTML of the page. All controller names should be lowercase and comma separated. No spaces are allowed between them.',
+
     'SHOP_MODULE_bShowDebug'=> 'Show debug infos in browser console',
+    'HELP_SHOP_MODULE_bShowDebug' => 'This determines whether the module displays the debug information in the browser console. Useful for debugging purposes.',
 
     'SHOP_MODULE_bPreselectCountry' => 'Preselect default country',
+    'HELP_SHOP_MODULE_bPreselectCountry' => 'If the landing input field is not selected when the page is loaded, this function preselects a specific country.',
+
     'SHOP_MODULE_sPreselectableCountries' => 'Default country',
+    'HELP_SHOP_MODULE_sPreselectableCountries' => 'This can be used to determine which country is preselected. Important! Please select only the country that would also be selectable in the store.',
+
     'SHOP_MODULE_sPreselectableCountries_af' => 'Afghanistan',
     'SHOP_MODULE_sPreselectableCountries_ax' => 'Åland Islands',
     'SHOP_MODULE_sPreselectableCountries_al' => 'Albania',

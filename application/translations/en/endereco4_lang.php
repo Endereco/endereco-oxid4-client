@@ -18,7 +18,7 @@ $sLangName  = "English";
 // RESOURCE IDENTITFIER = STRING
 // -------------------------------
 $aLang = [
-    'charset' => 'ISO-8859-1',
+    'charset' => 'ISO-8859-15',
     'ENDERECOOXID6CLIENT_POPUP_HEADLINE' => 'Check your address',
     'ENDERECOOXID6CLIENT_POPUP_SUBLINE' => 'The address you entered seems to have a problem. Please select an address from options under.',
     'ENDERECOOXID6CLIENT_POPUP_INPUT' => 'Your entry:',

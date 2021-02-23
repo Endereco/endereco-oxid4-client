@@ -2,14 +2,14 @@
 $sMetadataVersion = '1.1';
 $aModule = [
     'id'            => 'endereco-oxid4-client',
-    'title'         => 'Endereco Adress-Services für Oxid',
+    'title'         => 'Endereco Adress-Services f&uuml;r Oxid',
     'description'   => array(
         'en' => 'Customer master data validation and correction suggestions',
-        'de' => 'Kundenstammdaten-Validierung und Korrekturvorschläge.',
+        'de' => 'Kundenstammdaten-Validierung und Korrekturvorschl&auml;ge.',
     ),
     'thumbnail'     => 'endereco.png',
     'version'       => '4.2.0',
-    'author'        => 'Endereco UG (Haftungsbeschränkt) - Gesellschaft für Master Data Quality Management',
+    'author'        => 'Endereco UG (Haftungsbeschr&auml;nkt) - Gesellschaft f&uuml;r Master Data Quality Management',
     'email'         => 'info@endereco.de',
     'url'           => 'https://www.endereco.de',
     'files' => [

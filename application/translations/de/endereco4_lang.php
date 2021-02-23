@@ -18,7 +18,7 @@ $sLangName  = "Deutsch";
 // RESOURCE IDENTITFIER = STRING
 // -------------------------------
 $aLang = [
-    'charset' => 'ISO-8859-1',
+    'charset' => 'ISO-8859-15',
     'ENDERECOOXID6CLIENT_POPUP_HEADLINE' => 'Adresse pr&uuml;fen',
     'ENDERECOOXID6CLIENT_POPUP_SUBLINE' => 'Die eingegebene Adresse scheint nicht korrekt oder unvollständig zu sein. Bitte eine korrekte Adresse wählen.',
     'ENDERECOOXID6CLIENT_POPUP_INPUT' => 'Ihre Eingabe:',
@@ -33,4 +33,3 @@ $aLang = [
     'ENDERECOOXID6CLIENT_STATUS_EMAIL_SYNTAX_ERROR' => 'Prüfen Sie die Schreibweise',
     'ENDERECOOXID6CLIENT_STATUS_EMAIL_NO_MX' => 'Die E-Mail Adresse existiert nicht. Prüfen Sie die Schreibweise.',
 ];
-
