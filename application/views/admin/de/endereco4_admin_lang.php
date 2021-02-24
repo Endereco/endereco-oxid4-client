@@ -65,7 +65,7 @@ $aLang = [
     'HELP_SHOP_MODULE_bShowEmailserviceErrors' => 'Diese Einstellung bestimmt, ob unterhalb des E-Mail-Eingabefeldes die Fehlermeldungen in Textform angezeigt werden sollen.',
 
     'SHOP_MODULE_bUseEmailservice'=> 'E-Mail Adressprüfung aktivieren',
-    'HELP_SHOP_MODULE_bUseEmailservice' => 'Hiermit wird bestimmt, ob die E-Mail Adresse geprüft werden soll. Wir prüfen die Schreibweise (Syntax) der E-Mail, den Host und ob dort E-Mails zugestellt werden können und schließlich, ob das Postfach tatsächlich existiert.',
+    'HELP_SHOP_MODULE_bUseEmailservice' => 'Hiermit wird bestimmt, ob die E-Mail Adresse geprüft werden soll. Wir prüfen die Schreibweise (Syntax) der E-Mail, den Host und ob die E-Mailadresse tatsächlich existiert. Zusätzlich wird überprüft ob E-Mails zustellbar sind.',
 
     'SHOP_MODULE_GROUP_PersonalService'=> 'Anredeprüfung',
 
@@ -95,11 +95,11 @@ $aLang = [
     'HELP_SHOP_MODULE_bShowDebug' => 'Hierüber bestimmt man, ob das Modul die Debuginformation in der Browser Konsole ausgibt. Nützlich für Debugzwecke.',
 
     'SHOP_MODULE_bPreselectCountry' => 'Standardland vorausw&auml;hlen',
-    'HELP_SHOP_MODULE_bPreselectCountry' => 'Wenn beim Laden der Seite das Landeingabefeld nicht ausgewählt ist, wird mit dieser Funktion ein bestimmtes Land vorausgewählt.',
+    'HELP_SHOP_MODULE_bPreselectCountry' => 'Wenn beim Laden der Seite das Länderauswahlfeld nicht ausgewählt ist, wird mit dieser Funktion ein bestimmtes Land vorausgewählt.',
 
 
     'SHOP_MODULE_sPreselectableCountries' => 'Standardland',
-    'HELP_SHOP_MODULE_sPreselectableCountries' => 'Damit kann bestimmt werden, welches Land vorausgewählt wird. Wichtig! Bitte nur das Land wählen, welches auch im Shop auswählbar wäre.',
+    'HELP_SHOP_MODULE_sPreselectableCountries' => 'Damit kann bestimmt werden, welches Land vorausgewählt wird. Wichtig! Bitte nur Länder auswählen, die auch im Shop auswählbar sind.',
 
     'SHOP_MODULE_sPreselectableCountries_af' => 'Afghanistan',
     'SHOP_MODULE_sPreselectableCountries_ax' => 'Åland-Inseln',
