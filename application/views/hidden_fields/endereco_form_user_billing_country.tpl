@@ -20,7 +20,7 @@
 
                 EAO.waitForAllExtension().then( function(EAO) {
                     EAO.onAfterModalRendered.push(function(EAO) {
-                        if (!document.querySelector('[name="invadr[oxuser__oxcountryid]"]').offsetParent) {
+                        if (!document.querySelector('[name="invadr[oxuser__oxzip]"]').offsetParent) {
                             if ('billing_address' === EAO.addressType) {
                                 if (document.querySelector('#userChangeAddress')) {
                                     document.querySelector('#userChangeAddress').click();
