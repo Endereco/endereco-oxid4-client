@@ -46,4 +46,4 @@ Es ist jedoch empfehlenswert sich die Einstellungen nochmal genauer anzuschauen 
 
 ## Konfiguration des Moduls aus dem Backend
 
-Die Konfigurationen des Moduls sind [hier](https://www.endereco.de/hilfe/intallationsanleitung_oxid4/#konfiguration_moduls_oxid6) beschrieben.
+Die Konfigurationen des Moduls sind [hier](https://www.endereco.de/hilfe/intallationsanleitung_oxid6/) beschrieben.
