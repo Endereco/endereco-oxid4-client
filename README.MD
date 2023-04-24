@@ -38,12 +38,12 @@ Ist dies gemacht, soll das Modul in der Auflistung der Module im Backend von Onl
 
 ## Aktivierung des Moduls
 
-Vor der Aktivierung ist es empfehlenswert einen API-Key bei Endereco anzufragen. Dafür kann man entweder über [die Website von Endereco](https://www.endereco.de/) eine Anfrage erstellen oder direkt mit einer E-Mail an info@endereco.de anfragen.
+Zur Aktivierung des Moduls ist ein API-Key bei Endereco notwendig. Dieser kann über "30 Tage Kostenlos Testen" auf der [Website von Endereco](](https://www.endereco.de/oxid-eshop/) angefragt werden.
 
-Trägt man den API-Key in Einstellungen ein und klickt auf "Aktivieren", ist das Modul sofort aktiviert und einsatzbereit.
-
-Es ist jedoch empfehlenswert sich die Einstellungen nochmal genauer anzuschauen und Feature zu aktivieren/deaktivieren, die man braucht.
+Trägt man den API-Key in Einstellungen des Modus ein und klickt auf "Aktivieren", ist das Modul einsatzbereit.
 
 ## Konfiguration des Moduls aus dem Backend
 
-Die Konfigurationen des Moduls sind [hier](https://www.endereco.de/hilfe/intallationsanleitung_oxid6/) beschrieben.
+Die Konfigurationsmöglichkeiten des Moduls sind [hier](https://www.endereco.de/hilfe/intallationsanleitung_oxid6/) beschrieben.
+
+Bei Problemen und technischen Rückfragen stehen wir unter support@endereco.de zur Verfügung.
