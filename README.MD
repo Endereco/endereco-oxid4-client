@@ -38,7 +38,7 @@ Ist dies gemacht, soll das Modul in der Auflistung der Module im Backend von Onl
 
 ## Aktivierung des Moduls
 
-Zur Aktivierung des Moduls ist ein API-Key bei Endereco notwendig. Dieser kann über "30 Tage Kostenlos Testen" auf der [Website von Endereco](](https://www.endereco.de/oxid-eshop/) angefragt werden.
+Zur Aktivierung des Moduls ist ein API-Key bei Endereco notwendig. Dieser kann über "30 Tage Kostenlos Testen" auf der [Website von Endereco](https://www.endereco.de/oxid-eshop/) angefragt werden.
 
 Trägt man den API-Key in Einstellungen des Modus ein und klickt auf "Aktivieren", ist das Modul einsatzbereit.
 
